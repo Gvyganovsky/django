@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 
 from flowershop.models import Product
@@ -12,3 +13,11 @@ def product(request, product_id):
     product = Product.objects.get(id=product_id)
 
     return render(request, 'product.html', context={'product': product})
+
+
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'
+
+
+class CustomLogoutView(LogoutView):
+    template_name = 'registration/logout.html'
