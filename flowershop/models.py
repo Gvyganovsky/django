@@ -24,7 +24,7 @@ class Country(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=80)
     price = models.PositiveIntegerField()
-    image = models.ImageField(upload_to='')
+    image = models.ImageField(upload_to='products')  # Создаст папку products внутри папки media
     date = models.DateTimeField()
     counts = models.PositiveIntegerField()
     color = models.CharField(max_length=60)
