@@ -24,7 +24,7 @@
                         </div>
                         <form method="get" action="/product/{{ product.id }}">
                             <div class="card-body">
-                                <img src='{{ product.image.url }}' alt='flower' class="img-fluid w-100">
+                                <img src='{{ product.image.url }}' alt='flower' style="max-width: 320px; height: 400px">
                                 <ul class="list-unstyled mt-3 mb-4">
                                     <li>Цена: {{ product.price }} рублей</li>
                                     <li>Дата поступления: {{ product.date.date }}</li>

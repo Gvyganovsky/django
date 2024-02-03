@@ -14,28 +14,26 @@
 <div class="container py-3">
     {% include 'header.html' %}
 
-    <main>
-        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-header py-3">
-                        <h4 class="my-0 fw-normal">{{ product.name }}</h4>
-                    </div>
-                    <form method="get" action="/product/{{ product.id }}">
-                        <div class="card-body">
-                            <img src='{{ product.image.url }}' alt='flower' class="img-fluid w-100">
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li>Цена: {{ product.price }} рублей</li>
-                                <li>Дата поступления: {{ product.date.date }}</li>
-                                <li>Наличие: {{ product.counts }}</li>
-                                <li>Цвет: {{ product.color }}</li>
-                                <li>Категория: {{ product.category.name }}</li>
-                                <li>Страна: {{ product.country.name }}</li>
-                            </ul>
-                            <button class="w-100 btn btn-lg btn-outline-primary" type="submit">Купить</button>
-                        </div>
-                    </form>
+    <main style="display: grid; justify-content: center; text-align: center">
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">{{ product.name }}</h4>
                 </div>
+                <form method="get" action="/product/{{ product.id }}">
+                    <div class="card-body">
+                        <img src='{{ product.image.url }}' alt='flower' style="max-width: 320px; height: 400px">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Цена: {{ product.price }} рублей</li>
+                            <li>Дата поступления: {{ product.date.date }}</li>
+                            <li>Наличие: {{ product.counts }}</li>
+                            <li>Цвет: {{ product.color }}</li>
+                            <li>Категория: {{ product.category.name }}</li>
+                            <li>Страна: {{ product.country.name }}</li>
+                        </ul>
+                        <button class="w-100 btn btn-lg btn-outline-primary" type="submit">Купить</button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
