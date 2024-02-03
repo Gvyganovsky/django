@@ -24,7 +24,9 @@ class CustomLogoutView(LogoutView):
 
 
 def about(request):
-    return render(request, 'about.html')
+    new_products = Product.objects.order_by('-date')[:5]  # Получаем первые пять новинок
+    return render(request, 'about.html', {'new_products': new_products})
+
 
 
 def contact(request):
