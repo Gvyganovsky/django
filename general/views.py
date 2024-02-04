@@ -15,18 +15,9 @@ def product(request, product_id):
     return render(request, 'product.html', context={'product': product})
 
 
-class CustomLoginView(LoginView):
-    template_name = 'registration/login.html'
-
-
-class CustomLogoutView(LogoutView):
-    template_name = 'registration/logout.html'
-
-
 def about(request):
     new_products = Product.objects.order_by('-date')[:5]  # Получаем первые пять новинок
     return render(request, 'about.html', {'new_products': new_products})
-
 
 
 def contact(request):
