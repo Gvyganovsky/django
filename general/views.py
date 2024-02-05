@@ -1,11 +1,8 @@
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import FormView
 
 from flowershop.models import Product
-from general.forms import RegistrationForm
+from general.forms import RegistrationForm, CustomAuthenticationForm
 
 from .forms import ProductFilterForm
 
@@ -53,6 +50,22 @@ def contact(request):
     return render(request, 'contact.html')
 
 
+def login_view(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')  # Замените 'home' на имя вашего представления для перенаправления после входа
+    else:
+        form = CustomAuthenticationForm()
+
+    return render(request, 'registration/login.html', {'form': form})
+
+
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -64,5 +77,3 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'registration/register.html', {'form': form})
-
-

@@ -7,13 +7,12 @@ from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
 
 from general import views
-from general.views import index
+from general.views import index, login_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('product/<int:product_id>', views.product),
-
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.register, name='register'),
 

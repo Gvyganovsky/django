@@ -15,23 +15,22 @@
     {% include 'header.html' %}
 
     <main class="form-signin w-100 m-auto">
-        <form method="post">
+        <form method="post" class="mt-5">
             {% csrf_token %}
             <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-            <div class="form-floating">
-                <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Alexander">
-                <label for="floatingInput">Login</label>
-            </div>
-            <div class="form-floating">
-                <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-            </div>
+            <div style="display: grid">
+                {{ form.username.label_tag }}
+                {{ form.username }}
 
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
             <div class="form-check text-start my-3">
-                <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
+                <input class="form-check-input" type="checkbox" name="{{ form.prefix }}-remember"
+                       id="{{ form.prefix }}-flexCheckDefault">
+                <label class="form-check-label" for="{{ form.prefix }}-flexCheckDefault">
                     Remember me
                 </label>
             </div>

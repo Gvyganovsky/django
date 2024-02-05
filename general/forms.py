@@ -1,9 +1,12 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import ValidationError
-from django.forms import forms, CharField, DecimalField, ChoiceField, PasswordInput, BooleanField, EmailField
-
+from django.forms import forms, CharField, DecimalField, ChoiceField, BooleanField, EmailField, TextInput, PasswordInput
 from flowershop.models import CustomUser
+from django.contrib.auth.forms import AuthenticationForm
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = CharField(label='Login', widget=TextInput(attrs={'class': 'form-control'}))
+    password = CharField(label='Password', widget=PasswordInput(attrs={'class': 'form-control'}))
 
 
 class RegistrationForm(UserCreationForm):
