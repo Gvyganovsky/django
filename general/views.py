@@ -22,17 +22,19 @@ def index(request):
         category = cleaned_data.get('category', '')
 
         if country:
-            product_list = product_list.filter(country__name__icontains=country)
+            product_list = product_list.filter(country__name__iexact=country.capitalize())
         if name:
-            product_list = product_list.filter(name__icontains=name)
+            product_list = product_list.filter(name__iexact=name.capitalize())
         if price_min is not None:
             product_list = product_list.filter(price__gte=price_min)
         if price_max is not None:
             product_list = product_list.filter(price__lte=price_max)
         if category:
-            product_list = product_list.filter(category__name__icontains=category)
+            product_list = product_list.filter(category__name__iexact=category.capitalize())
 
     return render(request, 'index.html', context={'product_list': product_list, 'form': form})
+
+
 
 
 def product(request, product_id):
