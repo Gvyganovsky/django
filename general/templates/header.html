@@ -22,7 +22,7 @@
                     <button type="submit">Выйти</button>
                 </form>
             {% else %}
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Регистрация</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'register' %}">Регистрация</a>
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'login' %}">Вход</a>
             {% endif %}
         </nav>
