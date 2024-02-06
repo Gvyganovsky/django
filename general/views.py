@@ -1,9 +1,10 @@
 from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from pyexpat.errors import messages
 
-from flowershop.models import Product
+from flowershop.models import Product, Order
 from general.forms import RegistrationForm, CustomAuthenticationForm
-
+from django.contrib import messages
 from .forms import ProductFilterForm
 
 
@@ -33,8 +34,6 @@ def index(request):
             product_list = product_list.filter(category__name__iexact=category.capitalize())
 
     return render(request, 'index.html', context={'product_list': product_list, 'form': form})
-
-
 
 
 def product(request, product_id):
@@ -79,3 +78,51 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
+
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart = request.user.get_cart()
+    cart.products.add(product)
+    messages.success(request, f"{product.name} добавлен в корзину.")
+    return redirect('index')
+
+
+# В файле views.py
+
+def view_cart(request):
+    cart = request.user.get_cart()
+    total_price = cart.calculate_total_price()
+    return render(request, 'cart.html', {'cart': cart, 'total_price': total_price})
+
+
+def checkout(request):
+    cart = request.user.get_cart()
+    total_price = cart.calculate_total_price()
+
+    if request.method == 'POST':
+        order = Order.objects.create(user=request.user, total_price=total_price)
+        order.products.set(cart.products.all())
+        cart.products.clear()
+        messages.success(request, "Заказ оформлен успешно.")
+        return redirect('index')
+
+    return render(request, 'checkout.html', {'cart': cart, 'total_price': total_price})
+
+
+def cart(request):
+    # Логика для корзины здесь
+    return render(request, 'cart.html')
+
+
+def remove_from_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart = request.user.get_cart()
+
+    if product in cart.products.all():
+        cart.products.remove(product)
+        messages.success(request, f"{product.name} удален из корзины.")
+    else:
+        messages.error(request, f"{product.name} не найден в корзине.")
+
+    return redirect('view_cart')

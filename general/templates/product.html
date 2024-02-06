@@ -20,7 +20,8 @@
                 <div class="card-header py-3">
                     <h4 class="my-0 fw-normal">{{ product.name }}</h4>
                 </div>
-                <form method="get" action="/product/{{ product.id }}">
+                <form method="post" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
                     <div class="card-body">
                         <img src='{{ product.image.url }}' alt='flower' style="max-width: 320px; height: 400px">
                         <ul class="list-unstyled mt-3 mb-4">
@@ -31,7 +32,7 @@
                             <li>Категория: {{ product.category.name }}</li>
                             <li>Страна: {{ product.country.name }}</li>
                         </ul>
-                        <button class="w-100 btn btn-lg btn-outline-primary" type="submit">Купить</button>
+                        <button class="w-100 btn btn-lg btn-outline-primary" type="submit" name="add_to_cart">Купить</button>
                     </div>
                 </form>
             </div>
